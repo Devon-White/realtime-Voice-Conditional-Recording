@@ -1,25 +1,19 @@
 import {Voice} from "@signalwire/realtime-api";
 
-// Creates a sleep function to wait X seconds before moving to next task
 const sleep = (seconds) => new Promise(resolve => setTimeout(resolve, seconds*1000))
 
-
-
-// Establishing our Client
 const client = new Voice.Client({
   project: "Project ID Here",
   token: "Auth Token Here",
   contexts: ["test"],
 });
-
-// Set your From and To numbers Here
 let from_num = "Number you wish to Dial From";
 let to_phone = "PSTN Number you wish to dial too";
-let from_sip =`sip:${from_num}@subdomainhere.sip.signalwire.com`;
+let from_sip = `sip:${from_num}@subdomainhere.sip.signalwire.com`;
 let to_sip = "sip:resourcenamehere@subdomainhere.sip.signalwire.com";
 
+let tester = "Hi there"
 
-// Plan 1 to call out to a PSTN number
 let plan_1 = new Voice.DeviceBuilder().add(
 Voice.DeviceBuilder.Phone({
   from: `${from_num}`,
@@ -28,7 +22,6 @@ Voice.DeviceBuilder.Phone({
 })
 );
 
-// Plan 2 to call out to a SIP number
 let plan_2 = new Voice.DeviceBuilder().add(
 Voice.DeviceBuilder.Sip({
   from: `${from_sip}`,
@@ -38,11 +31,15 @@ Voice.DeviceBuilder.Sip({
 );
 
 
-// Initiates Logic on Call Received
+// Initiate Logic on Call Received
 client.on("call.received", async (call) => {
   try {
     await call.answer();
+    from_num = call.from;
+    console.log(tester)
+
     console.log("Inbound call answered");
+    console.log(call.id)
     const thing = await call.playTTS({text: "Welcome to SignalWire!"});
     await thing.waitForEnded();
     await Menu(call);
@@ -52,9 +49,12 @@ client.on("call.received", async (call) => {
 )
 
 
-  // Function For connecting Call, starting recording, and playTTS to both Peers of the call
+  // Function For connecting Call
   async function connect_call(call, plan) {
+    console.log(from_num)
     let peer = await call.connect(plan);
+    console.log(call.id)
+    console.log(peer.id)
     const recording = await call.recordAudio({
       beep: true,
       direction: "both",
@@ -62,11 +62,12 @@ client.on("call.received", async (call) => {
       endSilenceTimeout: 20
     });
     console.log("Recording Started")
+    console.log(recording)
     const peer1_say = await call.playTTS({text: "You are peer 1"});
     await peer1_say.waitForEnded();
     const peer2_say = await peer.playTTS({text: "You are peer 2. Please Say. I am peer 2"});
     await peer2_say.waitForEnded();
-    await sleep(5)
+    await sleep(10)
     const end_say = await peer.playTTS({text: "Ending Call and Saving Recording."});
     await end_say.waitForEnded();
     peer.hangup();
@@ -74,6 +75,7 @@ client.on("call.received", async (call) => {
     await goodbye_say.waitForEnded();
     await recording.stop();
     await call.hangup();
+
     console.log(recording.url);
 
   }
@@ -91,11 +93,20 @@ client.on("call.received", async (call) => {
       hints: [],
     },
     });
-
     // Waits for users response then stores the text of the response.
     const { type, speech, terminator } = await prompt.waitForResult();
-    console.log(prompt.result.params.text)
-    let say_result = prompt.result.params.text
+    console.log(prompt);
+    let prompt_result = prompt.result;
+    console.log(prompt_result);
+    if (prompt_result.type === "no_input" || prompt_result.type === "no_match") {
+    const invalid_response = await call.playTTS({text: "We did not receive a valid response."});
+    await invalid_response.waitForEnded();
+    await Menu(call);
+
+    }
+    else {
+      console.log(prompt.result.params.text)
+      let say_result = prompt.result.params.text
 
     // If response is Alpha we connect them to our PSTN plan (which for this demo is used to dial out to a Verto Endpoint)
     if (await say_result === "Alpha") {
@@ -112,4 +123,4 @@ client.on("call.received", async (call) => {
       await retry.waitForEnded();
       await Menu(call);
 
-    }}
+    }}}
