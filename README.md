@@ -17,7 +17,7 @@ const client = new Voice.Client({
 
 
 ## How to Use:
-Make sure to set a `SignalWire Number` to handle Incomming Calls as Relay. Then Make sure to set the `contexts` of the number as the same `contexts` in the script:
+Make sure to set a `SignalWire Number` to handle Incomming Calls as Relay. Then Make sure to set the `contexts` of the `SignalWire Number` as the same `contexts` in the script:
 
 ```js
 const client = new Voice.Client({
