@@ -31,7 +31,7 @@ const client = new Voice.Client({
 
 ## Making The Call
 
-Once the JWT is generated and you are connected to your client, launch `Voice_Client`. 
+Once the JWT is generated and you are connected to your client, launch `Voice_Client.js`. 
 
 Call into the number attached to your Relay Client. Once the call is answered you will be `prompted` to respond back by either saying `Alpha` or `Beta`. Say `Alpha` to connect to your `PSTN` dial_plan and say `Beta` to connect to your `SIP` dial_plan.
 
