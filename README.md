@@ -24,7 +24,7 @@ const client = new Voice.Client({
 
  Next you will need to generate a JWT token for the `index.html`
  <ol>
-<li> Follow the Getting Started steps in the JavaScript SDK Documentation to generate a JSON Web Token for your project.</li>
+<li> Follow the <a href="https://docs.signalwire.com/reference/relay-sdk-js/v1/#relay-sdk-for-javascript-using-the-sdk">Getting Started</a> steps in the JavaScript SDK Documentation to generate a JSON Web Token for your project.</li>
 <li> Load the index.html file in your browser. You don't need to setup or run any HTTP servers, just double clicking the file or open it directly in your browser. </li>
 <li> Fill in your Project ID and JWT. Click Connect and thats it! You'll now be able to dial other web browsers and SIP endpoints from your SignalWire project, as well as dial out to phone numbers. </li>
 </ol>
