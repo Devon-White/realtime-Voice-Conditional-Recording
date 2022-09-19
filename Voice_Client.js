@@ -36,10 +36,8 @@ client.on("call.received", async (call) => {
   try {
     await call.answer();
     from_num = call.from;
-    console.log(tester)
 
     console.log("Inbound call answered");
-    console.log(call.id)
     const thing = await call.playTTS({text: "Welcome to SignalWire!"});
     await thing.waitForEnded();
     await Menu(call);
@@ -51,10 +49,7 @@ client.on("call.received", async (call) => {
 
   // Function For connecting Call
   async function connect_call(call, plan) {
-    console.log(from_num)
     let peer = await call.connect(plan);
-    console.log(call.id)
-    console.log(peer.id)
     const recording = await call.recordAudio({
       beep: true,
       direction: "both",
@@ -62,12 +57,11 @@ client.on("call.received", async (call) => {
       endSilenceTimeout: 20
     });
     console.log("Recording Started")
-    console.log(recording)
     const peer1_say = await call.playTTS({text: "You are peer 1"});
     await peer1_say.waitForEnded();
     const peer2_say = await peer.playTTS({text: "You are peer 2. Please Say. I am peer 2"});
     await peer2_say.waitForEnded();
-    await sleep(10)
+    await sleep(5)
     const end_say = await peer.playTTS({text: "Ending Call and Saving Recording."});
     await end_say.waitForEnded();
     peer.hangup();
@@ -95,9 +89,7 @@ client.on("call.received", async (call) => {
     });
     // Waits for users response then stores the text of the response.
     const { type, speech, terminator } = await prompt.waitForResult();
-    console.log(prompt);
     let prompt_result = prompt.result;
-    console.log(prompt_result);
     if (prompt_result.type === "no_input" || prompt_result.type === "no_match") {
     const invalid_response = await call.playTTS({text: "We did not receive a valid response."});
     await invalid_response.waitForEnded();
