@@ -12,7 +12,6 @@ let to_phone = "PSTN Number you wish to dial too";
 let from_sip = `sip:${from_num}@subdomainhere.sip.signalwire.com`;
 let to_sip = "sip:resourcenamehere@subdomainhere.sip.signalwire.com";
 
-let tester = "Hi there"
 
 let plan_1 = new Voice.DeviceBuilder().add(
 Voice.DeviceBuilder.Phone({
