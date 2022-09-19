@@ -8,6 +8,13 @@ let to_phone = "PSTN Number you wish to dial too";
 let from_sip =`sip:${from_num}@subdomainhere.sip.signalwire.com`;
 let to_sip = "sip:resourcenamehere@subdomainhere.sip.signalwire.com";
 ```
+```js
+const client = new Voice.Client({
+  project: "Project ID",
+  token: "Auth Token HERE",
+  contexts: ["Put Context Here"],
+```
+
 
 ## How to Use:
 Make sure to set a `SignalWire Number` to handle Incomming Calls as Relay. Then Make sure to set the `contexts` of the number as the same `contexts` in the script:
