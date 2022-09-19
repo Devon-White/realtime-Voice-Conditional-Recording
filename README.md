@@ -33,7 +33,7 @@ const client = new Voice.Client({
 
 Once the JWT is generated and you are connected to your client, launch `Voice_Client`. 
 
-Call into the number attached to your Relay Client. Once the call is answered you will be `prompted` to respond back with either `Alpha` or `Beta`. Say `Alpha` to connect to your `PSTN` dial_plan and say `Beta` to connect to your `SIP` dial_plan.
+Call into the number attached to your Relay Client. Once the call is answered you will be `prompted` to respond back by either saying `Alpha` or `Beta`. Say `Alpha` to connect to your `PSTN` dial_plan and say `Beta` to connect to your `SIP` dial_plan.
 
 Once connected, the call will then proceed to Play Text-To-Speach into the call. Once the `TTS` is completed, the call will hangup the peer, complete the `recording` and then hangup the call.
 
