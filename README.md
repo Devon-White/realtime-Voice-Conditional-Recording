@@ -1,4 +1,4 @@
-# realtime-Voice-Conditional-Recording
+# Realtime-Voice-Conditional-Recording
 
 ## Remember to fill out the following information:
 
