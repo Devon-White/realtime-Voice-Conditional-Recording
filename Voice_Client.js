@@ -16,7 +16,6 @@ client.on("call.received", async (call) => {
     console.log(tester);
 
     console.log("Inbound call answered");
-    console.log(call.id);
     const thing = await call.playTTS({text: "Welcome to SignalWire!"});
     await thing.waitForEnded();
     await Menu(call);
@@ -28,11 +27,7 @@ client.on("call.received", async (call) => {
 
   // Function For connecting Call
   async function connect_call(call, plan) {
-
-    console.log(plan)
     let peer = await call.connect(plan);
-    console.log(call.id);
-    console.log(peer.id);
     const recording = await call.recordAudio({
       beep: true,
       direction: "both",
@@ -40,7 +35,6 @@ client.on("call.received", async (call) => {
       endSilenceTimeout: 20
     });
     console.log("Recording Started")
-    console.log(recording)
     const peer1_say = await call.playTTS({text: "You are peer 1"});
     await peer1_say.waitForEnded();
     const peer2_say = await peer.playTTS({text: "You are peer 2. Please Say. I am peer 2"});
@@ -86,8 +80,6 @@ client.on("call.received", async (call) => {
     else {
       console.log(prompt.result.params.text);
       let say_result = prompt.result.params.text;
-
-
 
     // If response is Alpha we connect them to our PSTN plan (which for this demo is used to dial out to a Verto Endpoint)
     if (await say_result === "Alpha") {
