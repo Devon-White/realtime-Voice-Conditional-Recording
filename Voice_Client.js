@@ -116,7 +116,6 @@ client.on("call.received", async (call) => {
 
     // If we do not see a matching response, prompt menu again to allow resubmission of response
     else {
-      tester = "We have changed"
       const retry = await call.playTTS({text: "Sorry, we did not recognize your response."});
       await retry.waitForEnded();
       await Menu(call);
