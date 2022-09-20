@@ -8,8 +8,6 @@ const client = new Voice.Client({
   contexts: ["test"],
 });
 
-let tester = "Hi there"
-
 
 // Initiate Logic on Call Received
 client.on("call.received", async (call) => {
